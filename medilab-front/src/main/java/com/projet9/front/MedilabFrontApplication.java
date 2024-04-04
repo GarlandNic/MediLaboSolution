@@ -1,13 +1,13 @@
-package com.projet9.MediLaboSolution;
+package com.projet9.front;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class ApiPatientsApplication {
+public class MedilabFrontApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(ApiPatientsApplication.class, args);
+		SpringApplication.run(MedilabFrontApplication.class, args);
 	}
 
 }

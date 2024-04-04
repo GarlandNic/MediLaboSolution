@@ -1,13 +1,13 @@
-package com.projet9.MediLaboSolution;
+package com.projet9.notes;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class MedilabGatewayApplication {
+public class ApiNotesApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(MedilabGatewayApplication.class, args);
+		SpringApplication.run(ApiNotesApplication.class, args);
 	}
 
 }

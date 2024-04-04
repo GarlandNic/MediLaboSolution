@@ -1,4 +1,4 @@
-package com.projet9.MediLaboSolution;
+package com.projet9.diabete;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

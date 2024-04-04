@@ -1,13 +1,13 @@
-package com.projet9.MediLaboSolution;
+package com.projet9.gateway;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class MedilabFrontApplication {
+public class MedilabGatewayApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(MedilabFrontApplication.class, args);
+		SpringApplication.run(MedilabGatewayApplication.class, args);
 	}
 
 }
