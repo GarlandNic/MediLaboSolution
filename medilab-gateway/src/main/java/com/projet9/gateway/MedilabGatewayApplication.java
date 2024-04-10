@@ -12,7 +12,7 @@ import org.springframework.context.annotation.Bean;
 public class MedilabGatewayApplication {
 	
 	private static final String CREDENTIALS = "user:password";
-	private static final String API_PATIENTS_PATH = "localhost:8091"; 
+	private static final String API_PATIENTS_PATH = "http://localhost:8091"; 
 
 	public static void main(String[] args) {
 		SpringApplication.run(MedilabGatewayApplication.class, args);
