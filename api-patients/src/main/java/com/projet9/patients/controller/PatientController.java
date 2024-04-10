@@ -7,11 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.projet9.patients.model.Patient;
 import com.projet9.patients.service.PatientService;
 
-@Controller
+@RestController
 public class PatientController {
 	
 	@Autowired
@@ -45,8 +46,8 @@ public class PatientController {
     }
     
     @RequestMapping("/deletePatient")
-    public void deletePatient(@RequestParam Patient patient) {
-    	patientServ.delete(patient);
+    public void deletePatient(@RequestParam int id) {
+    	patientServ.delete(id);
     }
     
 }

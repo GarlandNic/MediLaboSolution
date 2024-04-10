@@ -4,10 +4,14 @@ import java.time.LocalDate;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 
 @Entity
 @Table(name="Patient")
@@ -18,13 +22,14 @@ public class Patient {
 	@Column(name="Id")
 	private int id;
 	
-	@Column(name="LastName")
+	@Column(name="Last_Name")
 	private String lastName;
 	
-	@Column(name="FirstName")
+	@Column(name="First_Name")
 	private String firstName;
 	
-	@Column(name="DateOfBirth")
+	@Column(name="Date_Of_Birth")
+	@Temporal(TemporalType.DATE)
 	private LocalDate dateOfBirth;
 	
 	public static enum Gender {
@@ -32,6 +37,7 @@ public class Patient {
 		F;
 	}
 	@Column(name="Gender")
+	@Enumerated(EnumType.STRING)
 	private Gender gender;
 	
 	@Column(name="Address")
