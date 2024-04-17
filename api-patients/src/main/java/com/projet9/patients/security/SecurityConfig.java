@@ -33,15 +33,11 @@ public class SecurityConfig {
 	
 	@Bean
 	public UserDetailsService users() {
-		UserDetails user = User.builder().username("user").password(passwordEncoder().encode("password")).roles("USER").build();
+		UserDetails user = User.builder()
+				.username("userOfPatients")
+				.password(passwordEncoder().encode("passwordOfPatient"))
+				.build();
 		return new InMemoryUserDetailsManager(user);
 	}
-	
-//	@Bean
-//	public AuthenticationManager authenticationManager(HttpSecurity http, BCryptPasswordEncoder bCryptPasswordEncoder) throws Exception {
-//		AuthenticationManagerBuilder authenticationManagerBuilder = http.getSharedObject(AuthenticationManagerBuilder.class);
-//		authenticationManagerBuilder.userDetailsService(userDetailsServ).passwordEncoder(bCryptPasswordEncoder);
-//		return authenticationManagerBuilder.build();
-//	}
 
 }

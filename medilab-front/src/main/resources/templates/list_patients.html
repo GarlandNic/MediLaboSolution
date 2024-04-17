@@ -1,10 +1,48 @@
 <!DOCTYPE html>
-<html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
 <head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
+	<meta charset="UTF-8">
+	<title>MédiLabo Solutions</title>
+	<link rel="stylesheet" type="text/css" media="all" th:href="@{/medilabo_solution.css}" />
 </head>
 <body>
+
+<div style="text-align: right;">
+	Vous êtes connecté en tant que : <b><span th:remove="tag" th:text="${username}">nobody</span></b>
+</div>
+
+<h1>Médilabo Solutions</h1>
+
+Voici la liste des patients :
+
+<table style="width:100%; border: 1px solid; border-collapse:collapse;">
+	<thead>
+		<tr>
+			<th>Nom</th>
+			<th>Prénom</th>
+			<th>Date de naissance</th>
+			<th> </th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr th:each="patient, row_p : ${patientList}">
+			<th><span th:text="${patient.lastName}">nom</span></th>
+			<th><span th:text="${patient.firstName}">prénom</span></th>
+			<th><span th:text="${patient.dateOfBirth}">date de naissance</span></th>
+			<th><form action="#" th:action="@{'/patient/'+${patient.id}}" method="get">
+						<button type="submit">Voir la fiche</button>
+				</form></th>
+		</tr>
+		<tr>
+			<th> </th>
+			<th></th>
+			<th></th>
+			<th><form action="#" th:action="@{'/patient/newPatient'}" method="get">
+						<button type="submit">Ajouter un nouveau patient</button>
+				</form></th>
+		</tr>
+	</tbody>
+</table>
 
 </body>
 </html>

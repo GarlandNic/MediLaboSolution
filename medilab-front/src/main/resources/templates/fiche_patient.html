@@ -1,10 +1,73 @@
 <!DOCTYPE html>
-<html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
 <head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
+	<meta charset="UTF-8">
+	<title>MédiLabo Solutions</title>
+	<link rel="stylesheet" type="text/css" media="all" th:href="@{/medilabo_solution.css}" />
 </head>
 <body>
+
+<div style="text-align: right;">
+	Vous êtes connecté en tant que : <b><span th:remove="tag" th:text="${username}">nobody</span></b>
+</div>
+
+<h1>Médilabo Solutions</h1>
+
+Voici la fiche du patient :
+
+<form action="#" th:action="@{'/patient/modif/'+${patient.id}}" th:object="${patient}" method="post">
+<fieldset>
+	<table>
+		<tr>
+			<td>Nom : </td>
+			<td><input type="text" th:field="*{lastName}" placeholder="Nom" 
+					th:disabled="${modif==null || modif!=patient.id}" th:required="${modif!=null && modif==patient.id}" />
+		</tr>
+		<tr>
+			<td>Prénom : </td>
+			<td><input type="text" th:field="*{firstName}" placeholder="Prénom" 
+					th:disabled="${modif==null || modif!=patient.id}" th:required="${modif!=null && modif==patient.id}" />
+		</tr>
+		<tr>
+			<td>Date de naissance : </td>
+			<td><input type="date" th:field="*{dateOfBirth}" th:disabled="${modif==null || modif!=patient.id}" 
+					th:required="${modif!=null && modif==patient.id}" />
+		</tr>
+		<tr>
+			<td>Genre : </td>
+			<td><select th:field="*{gender}" th:disabled="${modif==null || modif!=patient.id}" th:required="${modif!=null && modif==patient.id}">
+							<option value="M"> Homme</option>
+							<option value="F"> Femme</option>
+				</select></td>
+		</tr>
+		<tr>
+			<td>Adresse : </td>
+			<td><input type="text" th:field="*{address}" placeholder="Adresse" th:disabled="${modif==null || modif!=patient.id}" />
+		</tr>
+		<tr>
+			<td>Téléphone : </td>
+			<td><input type="text" th:field="*{tel}" placeholder="Téléphone" th:disabled="${modif==null || modif!=patient.id}" />
+		</tr>
+	</table>
+</fieldset>
+
+<div style="text-align:right;">
+	<button th:unless="${modif != null && modif == perso.id}"  type="submit" name="modif" 
+                    			th:value="${perso.id}">Modifier</button>
+    <th:block th:if="${modif != null && modif == perso.id}">
+		<button type="submit" name="save" th:value="${perso.id}">Enregistrer les modifications</button> 
+        <button th:unless="${confirme != null && confirme == perso.id}"  type="submit" name="supprimer" 
+        		th:value="${perso.id}">Supprimer le patient</button> 
+       	<button th:if="${confirme != null && confirme == perso.id}" type="submit" name="confirmeSuppr"
+       			th:value="${perso.id}">Confirmer la suppression ?</button> 
+    </th:block>
+</div>
+
+</form>
+
+<form action="#" th:action="@{'/patient/listPatient'}" method="get">
+	<button type="submit">Retour à la liste des patients</button>
+</form>
 
 </body>
 </html>

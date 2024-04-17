@@ -5,40 +5,33 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.RememberMeServices;
 import org.springframework.security.web.authentication.rememberme.TokenBasedRememberMeServices;
 import org.springframework.security.web.authentication.rememberme.TokenBasedRememberMeServices.RememberMeTokenAlgorithm;
+
+import static org.springframework.security.config.Customizer.withDefaults;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
 	
 	@Autowired
-	private CustomUserDetailsService userDetailsServ;
+	private UserDetailsService userDetailsServ;
 
-    /**
-     * In this function, we defined which pages can be acceded without authentification, how the logout is done, and how to memorize the user on her computer.
-     * Here we used the default login page, but it can be customized in this function.
-     * @param a HttpSecurity object (http)
-     * @return a SecurityFilterChain object
-     * @throws Exception
-     */
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		http
 		.authorizeHttpRequests((requests) -> requests
-			.requestMatchers("/", "/home", "/user/**", "/css/**").permitAll()
-			.requestMatchers("/admin").hasRole("ADMIN")
 			.anyRequest().authenticated()
 		)
-		.formLogin((form) -> form.defaultSuccessUrl("/bidList/list", true))
-		.logout((logout) -> logout.logoutUrl("/app-logout")
-				.clearAuthentication(true)
-				.invalidateHttpSession(true)
-				.permitAll())
+		.formLogin(withDefaults())
 		.rememberMe((remember) -> remember
 				.rememberMeServices(rememberMeServices(userDetailsServ))
 			);
@@ -46,22 +39,22 @@ public class SecurityConfig {
 		return http.build();
 	}
 	
-	/**
-	 * This function choose the way of encryption of the passwords.
-	 * @return a PasswordEncoder object
-	 */
 	@Bean
 	PasswordEncoder passwordEncoder() {
 	    return new BCryptPasswordEncoder();
 	}
 	
-	/**
-	 * This function define how the remember-me action must be done.
-	 * @param a CustomUserDetailsService object (which implement UserDetailsService)
-	 * @return a RememberMeServices object
-	 */
 	@Bean
-	RememberMeServices rememberMeServices(CustomUserDetailsService userDetailsService) {
+	public UserDetailsService users() {
+		UserDetails user = User.builder()
+				.username("docteur")
+				.password(passwordEncoder().encode("docteur"))
+				.build();
+		return new InMemoryUserDetailsManager(user);
+	}
+
+	@Bean
+	RememberMeServices rememberMeServices(UserDetailsService userDetailsService) {
 		RememberMeTokenAlgorithm encodingAlgorithm = RememberMeTokenAlgorithm.SHA256;
 		TokenBasedRememberMeServices rememberMe = new TokenBasedRememberMeServices("superKeySecrete", userDetailsService, encodingAlgorithm);
 		rememberMe.setMatchingAlgorithm(RememberMeTokenAlgorithm.MD5);
