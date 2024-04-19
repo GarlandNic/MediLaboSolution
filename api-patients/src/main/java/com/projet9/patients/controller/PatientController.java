@@ -30,7 +30,7 @@ public class PatientController {
 //    }
     
     @RequestMapping("/getPatientById") 
-    public Patient getPatientBy(@RequestParam int id) {
+    public Patient getPatientById(@RequestParam int id) {
     	return patientServ.patientById(id);
     }
     

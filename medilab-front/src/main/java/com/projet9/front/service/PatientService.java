@@ -16,7 +16,7 @@ public class PatientService {
 	GatewayProxy gate;
 
 	public List<Patient> getListOfPatient() {
-		List<Patient> listOfPatient = gate.getListOfPatients();
+		List<Patient> listOfPatient = gate.listOfPatients();
 		// TODO tests non-null
 		return listOfPatient;
 	}
@@ -28,13 +28,15 @@ public class PatientService {
 	}
 
 	public Patient save(Patient patient) {
-		Patient patientFinal = gate.savePatient(patient);
-		// TODO test if ok
+		Patient pat = gate.getPatientById(patient.getId());
+		Patient patientFinal;
+		if(pat==null) patientFinal = gate.addPatient(patient);
+		else patientFinal = gate.updatePatient(patient);
 		return patientFinal;
 	}
 
 	public void delete(Patient patient) {
-		gate.deletePatientById(patient.getId());
+		gate.deletePatient(patient.getId());
 	}
 
 }
