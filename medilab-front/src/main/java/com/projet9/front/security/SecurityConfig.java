@@ -1,6 +1,5 @@
 package com.projet9.front.security;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -21,19 +20,16 @@ import static org.springframework.security.config.Customizer.withDefaults;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
-	
-	@Autowired
-	private UserDetailsService userDetailsServ;
 
     @Bean
-    SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    SecurityFilterChain securityFilterChain(HttpSecurity http, RememberMeServices rememberMeServices) throws Exception {
 		http
 		.authorizeHttpRequests((requests) -> requests
 			.anyRequest().authenticated()
 		)
 		.formLogin(withDefaults())
 		.rememberMe((remember) -> remember
-				.rememberMeServices(rememberMeServices(userDetailsServ))
+				.rememberMeServices(rememberMeServices)
 			);
 
 		return http.build();

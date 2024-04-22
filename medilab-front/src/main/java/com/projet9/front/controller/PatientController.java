@@ -24,28 +24,28 @@ public class PatientController {
 	
 	@GetMapping("/")
 	public String index(Model model) {
-		return "redirect:/patient/listPatient";
+		return "redirect:/patients/listPatient";
 	}
 	
-	@GetMapping("/patient/listPatient")
+	@GetMapping("/patients/listPatient")
 	public String listOfPatients(Model model, Principal principal) {
 		return displayHtmlListPatient(model, principal);		
 	}
 	
-	@GetMapping("/patient/newPatient")
+	@GetMapping("/patients/newPatient")
 	public String newPatientForm(Model model, Principal principal) {
 		Patient patient = new Patient();
 		model.addAttribute("modif", patient.getId());
 		return displayHtmlFichePatient(model, principal, patient);		
 	}
 	
-	@GetMapping("/patient/{id}")
+	@GetMapping("/patients/{id}")
 	public String patientInfo(Model model, Principal principal, @PathVariable("id") final int id) {
 		Patient patient = patientServ.getPatient(id);
 		return displayHtmlFichePatient(model, principal, patient);
 	}
 
-	@PostMapping(value="/patient/modif/{id}", params={"modif"})
+	@PostMapping(value="/patients/modif/{id}", params={"modif"})
 	public String activateModifPatient(Model model, Principal principal, @PathVariable("id") final int id, 
 			@ModelAttribute("patient") Patient patient, final HttpServletRequest req) {
 	    final Integer idModif = Integer.valueOf(req.getParameter("modif"));
@@ -53,14 +53,14 @@ public class PatientController {
 		return displayHtmlFichePatient(model, principal, patient);		
 	}
 	
-	@PostMapping(value="/patient/modif/{id}", params={"save"})
+	@PostMapping(value="/patients/modif/{id}", params={"save"})
 	public String savePatient(Model model, Principal principal, @PathVariable("id") final int id, 
 			@ModelAttribute("patient") Patient patient, final HttpServletRequest req) {
 		Patient patientSaved = patientServ.save(patient);
 		return "redirect:/patient/"+patientSaved.getId();		
 	}
 	
-	@PostMapping(value="/patient/modif/{id}", params={"supprimer"})
+	@PostMapping(value="/patients/modif/{id}", params={"supprimer"})
 	public String activateSupprPatient(Model model, Principal principal, @PathVariable("id") final int id, 
 			@ModelAttribute("patient") Patient patient, final HttpServletRequest req) {
 	    final Integer idSuppr = Integer.valueOf(req.getParameter("supprimer"));
@@ -69,7 +69,7 @@ public class PatientController {
 		return displayHtmlFichePatient(model, principal, patient);		
 	}
 
-	@PostMapping(value="/patient/modif/{id}", params={"confirmeSuppr"})
+	@PostMapping(value="/patients/modif/{id}", params={"confirmeSuppr"})
 	public String suppressionPatient(Model model, Principal principal, @PathVariable("id") final int id, 
 			@ModelAttribute("patient") Patient patient, final HttpServletRequest req) {
 		patientServ.delete(patient);
