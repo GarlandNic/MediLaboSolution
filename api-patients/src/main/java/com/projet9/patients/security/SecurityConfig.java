@@ -20,7 +20,8 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		http
 		.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-		.authorizeHttpRequests(requests -> requests.anyRequest().authenticated())
+//		.authorizeHttpRequests(requests -> requests.anyRequest().authenticated())
+		.authorizeHttpRequests(requests -> requests.anyRequest().permitAll())
 		.httpBasic(Customizer.withDefaults());
 
 		return http.build();

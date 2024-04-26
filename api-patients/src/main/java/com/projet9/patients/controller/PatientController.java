@@ -4,6 +4,11 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -17,8 +22,7 @@ public class PatientController {
 	@Autowired
 	PatientService patientServ;
 
-
-    @RequestMapping("/getPatients")
+    @GetMapping("/getPatients")
     public List<Patient> listOfPatients()
     {
         return patientServ.listOfPatients();
@@ -29,23 +33,23 @@ public class PatientController {
 //    	return patientServ.patientBy(param);
 //    }
     
-    @RequestMapping("/getPatientById") 
-    public Patient getPatientById(@RequestParam int id) {
+    @GetMapping("/getPatientById/{id}") 
+    public Patient getPatientById(@PathVariable("id") int id) {
     	return patientServ.patientById(id);
     }
     
-    @RequestMapping("/addPatient")
-    public Patient addPatient(@RequestParam Patient patient) {
+    @PostMapping("/addPatient")
+    public Patient addPatient(@RequestParam("patient") Patient patient) {
     	return patientServ.create(patient);
     }
     
-    @RequestMapping("/updatePatient")
-    public Patient updatePatient(@RequestParam Patient patient) {
+    @PutMapping("/updatePatient")
+    public Patient updatePatient(@RequestParam("patient") Patient patient) {
     	return patientServ.update(patient);
     }
     
-    @RequestMapping("/deletePatient")
-    public void deletePatient(@RequestParam int id) {
+    @DeleteMapping("/deletePatient/{id}")
+    public void deletePatient(@PathVariable("id") int id) {
     	patientServ.delete(id);
     }
     

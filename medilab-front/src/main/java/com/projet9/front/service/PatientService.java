@@ -11,19 +11,16 @@ import com.projet9.front.proxy.GatewayProxy;
 @Service
 public class PatientService {
 	
-	// proxy ??
 	@Autowired 
 	GatewayProxy gate;
 
 	public List<Patient> getListOfPatient() {
 		List<Patient> listOfPatient = gate.listOfPatients();
-		// TODO tests non-null
 		return listOfPatient;
 	}
 
 	public Patient getPatient(int id) {
 		Patient patient = gate.getPatientById(id);
-		// TODO test non-null
 		return patient;
 	}
 

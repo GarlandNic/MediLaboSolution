@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 
 @SpringBootApplication
-@EnableFeignClients("com.projet9.front")
+@EnableFeignClients("com.projet9.front.proxy")
 public class MedilabFrontApplication {
 
 	public static void main(String[] args) {
