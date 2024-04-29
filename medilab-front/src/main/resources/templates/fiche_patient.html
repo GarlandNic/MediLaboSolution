@@ -15,7 +15,7 @@
 
 Voici la fiche du patient :
 
-<form action="#" th:action="@{'/patient/modif/'+${patient.id}}" th:object="${patient}" method="post">
+<form action="#" th:action="@{'/patients/modif/'+${patient.id}}" th:object="${patient}" method="post">
 <fieldset>
 	<table>
 		<tr>
@@ -52,20 +52,20 @@ Voici la fiche du patient :
 </fieldset>
 
 <div style="text-align:right;">
-	<button th:unless="${modif != null && modif == perso.id}"  type="submit" name="modif" 
-                    			th:value="${perso.id}">Modifier</button>
-    <th:block th:if="${modif != null && modif == perso.id}">
-		<button type="submit" name="save" th:value="${perso.id}">Enregistrer les modifications</button> 
-        <button th:unless="${confirme != null && confirme == perso.id}"  type="submit" name="supprimer" 
-        		th:value="${perso.id}">Supprimer le patient</button> 
-       	<button th:if="${confirme != null && confirme == perso.id}" type="submit" name="confirmeSuppr"
-       			th:value="${perso.id}">Confirmer la suppression ?</button> 
+	<button th:unless="${modif != null && modif == patient.id}"  type="submit" name="modif" 
+                    			th:value="${patient.id}">Modifier</button>
+    <th:block th:if="${modif != null && modif == patient.id}">
+		<button type="submit" name="save" th:value="${patient.id}">Enregistrer les modifications</button> 
+        <button th:unless="${confirme != null && confirme == patient.id}"  type="submit" name="supprimer" 
+        		th:value="${patient.id}">Supprimer le patient</button> 
+       	<button th:if="${confirme != null && confirme == patient.id}" type="submit" name="confirmeSuppr"
+       			th:value="${patient.id}">Confirmer la suppression ?</button> 
     </th:block>
 </div>
 
 </form>
 
-<form action="#" th:action="@{'/patient/listPatient'}" method="get">
+<form action="#" th:action="@{'/patients/listPatient'}" method="get">
 	<button type="submit">Retour à la liste des patients</button>
 </form>
 

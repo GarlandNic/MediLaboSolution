@@ -23,8 +23,7 @@ public class PatientController {
 	PatientService patientServ;
 
     @GetMapping("/getPatients")
-    public List<Patient> listOfPatients()
-    {
+    public List<Patient> listOfPatients() {
         return patientServ.listOfPatients();
     }
     

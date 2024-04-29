@@ -57,7 +57,7 @@ public class PatientController {
 	public String savePatient(Model model, Principal principal, @PathVariable("id") final int id, 
 			@ModelAttribute("patient") Patient patient, final HttpServletRequest req) {
 		Patient patientSaved = patientServ.save(patient);
-		return "redirect:/patient/"+patientSaved.getId();		
+		return "redirect:/patients/"+patientSaved.getId();		
 	}
 	
 	@PostMapping(value="/patients/modif/{id}", params={"supprimer"})
@@ -73,7 +73,7 @@ public class PatientController {
 	public String suppressionPatient(Model model, Principal principal, @PathVariable("id") final int id, 
 			@ModelAttribute("patient") Patient patient, final HttpServletRequest req) {
 		patientServ.delete(patient);
-		return "redirect:/patient/listPatient";	
+		return "redirect:/patients/listPatient";	
 	}
 	
 	

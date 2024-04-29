@@ -21,7 +21,7 @@ public class MedilabGatewayApplication {
 	@Bean
 	public RouteLocator customRouteLocator(RouteLocatorBuilder builder) {
 		return builder.routes()
-				.route("path_patients", r -> r.path("/patients/*")
+				.route("path_patients", r -> r.path("/patients/**")
 						.filters(f -> f.rewritePath("/patients", "")
 								.addRequestHeader("Basic", Base64.getEncoder().encodeToString(API_PATIENTS_CREDENTIALS.getBytes())))
 						.uri(API_PATIENTS_PATH))

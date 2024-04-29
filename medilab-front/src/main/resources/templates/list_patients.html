@@ -29,7 +29,7 @@ Voici la liste des patients :
 			<th><span th:text="${patient.lastName}">nom</span></th>
 			<th><span th:text="${patient.firstName}">prénom</span></th>
 			<th><span th:text="${patient.dateOfBirth}">date de naissance</span></th>
-			<th><form action="#" th:action="@{'/patient/'+${patient.id}}" method="get">
+			<th><form action="#" th:action="@{'/patients/'+${patient.id}}" method="get">
 						<button type="submit">Voir la fiche</button>
 				</form></th>
 		</tr>
@@ -37,7 +37,7 @@ Voici la liste des patients :
 			<th> </th>
 			<th></th>
 			<th></th>
-			<th><form action="#" th:action="@{'/patient/newPatient'}" method="get">
+			<th><form action="#" th:action="@{'/patients/newPatient'}" method="get">
 						<button type="submit">Ajouter un nouveau patient</button>
 				</form></th>
 		</tr>

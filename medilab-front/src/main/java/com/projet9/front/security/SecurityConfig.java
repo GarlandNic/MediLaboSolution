@@ -25,7 +25,7 @@ public class SecurityConfig {
     SecurityFilterChain securityFilterChain(HttpSecurity http, RememberMeServices rememberMeServices) throws Exception {
 		http
 		.authorizeHttpRequests((requests) -> requests
-			.anyRequest().authenticated()
+				.anyRequest().authenticated()
 		)
 		.formLogin(withDefaults())
 		.rememberMe((remember) -> remember
