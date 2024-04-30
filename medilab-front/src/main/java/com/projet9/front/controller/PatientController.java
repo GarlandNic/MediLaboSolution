@@ -69,7 +69,7 @@ public class PatientController {
 		return displayHtmlFichePatient(model, principal, patient);		
 	}
 
-	@PostMapping(value="/patients/modif/{id}", params={"confirmeSuppr"})
+	@PostMapping(value="/patients/modif/{id}", params={"confirmSuppr"})
 	public String suppressionPatient(Model model, Principal principal, @PathVariable("id") final int id, 
 			@ModelAttribute("patient") Patient patient, final HttpServletRequest req) {
 		patientServ.delete(patient);

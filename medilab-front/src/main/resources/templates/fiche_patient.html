@@ -13,40 +13,47 @@
 
 <h1>Médilabo Solutions</h1>
 
-Voici la fiche du patient :
+<div>
+Voici la fiche du patient : 
+<span th:remove="tag" th:if="${modif==null || modif!=patient.id}"> <b>[mode lecture]</b> </span>
+<span th:remove="tag" th:unless="${modif==null || modif!=patient.id}"> <b>[mode modification]</b> </span>
+</div>
 
+<br/>
+
+<div>
 <form action="#" th:action="@{'/patients/modif/'+${patient.id}}" th:object="${patient}" method="post">
 <fieldset>
 	<table>
 		<tr>
 			<td>Nom : </td>
 			<td><input type="text" th:field="*{lastName}" placeholder="Nom" 
-					th:disabled="${modif==null || modif!=patient.id}" th:required="${modif!=null && modif==patient.id}" />
+					th:readonly="${modif==null || modif!=patient.id}" th:required="${modif!=null && modif==patient.id}" />
 		</tr>
 		<tr>
 			<td>Prénom : </td>
 			<td><input type="text" th:field="*{firstName}" placeholder="Prénom" 
-					th:disabled="${modif==null || modif!=patient.id}" th:required="${modif!=null && modif==patient.id}" />
+					th:readonly="${modif==null || modif!=patient.id}" th:required="${modif!=null && modif==patient.id}" />
 		</tr>
 		<tr>
 			<td>Date de naissance : </td>
-			<td><input type="date" th:field="*{dateOfBirth}" th:disabled="${modif==null || modif!=patient.id}" 
-					th:required="${modif!=null && modif==patient.id}" />
+			<td><input type="date" th:id="dateOfBirth" th:name="dateOfBirth" th:value="*{#temporals.format(dateOfBirth, 'yyyy-MM-dd')}"
+					th:readonly="${modif==null || modif!=patient.id}" th:required="${modif!=null && modif==patient.id}" />
 		</tr>
 		<tr>
 			<td>Genre : </td>
-			<td><select th:field="*{gender}" th:disabled="${modif==null || modif!=patient.id}" th:required="${modif!=null && modif==patient.id}">
+			<td><select th:field="*{gender}" th:readonly="${modif==null || modif!=patient.id}" th:required="${modif!=null && modif==patient.id}">
 							<option value="M"> Homme</option>
 							<option value="F"> Femme</option>
 				</select></td>
 		</tr>
 		<tr>
 			<td>Adresse : </td>
-			<td><input type="text" th:field="*{address}" placeholder="Adresse" th:disabled="${modif==null || modif!=patient.id}" />
+			<td><input type="text" th:field="*{address}" placeholder="Adresse" th:readonly="${modif==null || modif!=patient.id}" />
 		</tr>
 		<tr>
 			<td>Téléphone : </td>
-			<td><input type="text" th:field="*{tel}" placeholder="Téléphone" th:disabled="${modif==null || modif!=patient.id}" />
+			<td><input type="text" th:field="*{tel}" placeholder="Téléphone" th:readonly="${modif==null || modif!=patient.id}" />
 		</tr>
 	</table>
 </fieldset>
@@ -56,14 +63,15 @@ Voici la fiche du patient :
                     			th:value="${patient.id}">Modifier</button>
     <th:block th:if="${modif != null && modif == patient.id}">
 		<button type="submit" name="save" th:value="${patient.id}">Enregistrer les modifications</button> 
-        <button th:unless="${confirme != null && confirme == patient.id}"  type="submit" name="supprimer" 
+        <button th:unless="${confirm != null && confirm == patient.id}"  type="submit" name="supprimer" 
         		th:value="${patient.id}">Supprimer le patient</button> 
-       	<button th:if="${confirme != null && confirme == patient.id}" type="submit" name="confirmeSuppr"
+       	<button th:if="${confirm != null && confirm == patient.id}" type="submit" name="confirmSuppr"
        			th:value="${patient.id}">Confirmer la suppression ?</button> 
     </th:block>
 </div>
 
 </form>
+</div>
 
 <form action="#" th:action="@{'/patients/listPatient'}" method="get">
 	<button type="submit">Retour à la liste des patients</button>

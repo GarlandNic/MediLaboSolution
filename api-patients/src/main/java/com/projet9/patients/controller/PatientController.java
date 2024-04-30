@@ -4,11 +4,13 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -26,24 +28,23 @@ public class PatientController {
     public List<Patient> listOfPatients() {
         return patientServ.listOfPatients();
     }
-    
-//    @RequestMapping("/getPatientBy") 
-//    public List<Patient> getPatientBy(@RequestParam Map<String, String> param) {
-//    	return patientServ.patientBy(param);
-//    }
-    
+        
     @GetMapping("/getPatientById/{id}") 
     public Patient getPatientById(@PathVariable("id") int id) {
     	return patientServ.patientById(id);
     }
-    
-    @PostMapping("/addPatient")
-    public Patient addPatient(@RequestParam("patient") Patient patient) {
+
+    @PostMapping(path = "/addPatient",
+    		consumes = MediaType.APPLICATION_JSON_VALUE,
+    		produces = MediaType.APPLICATION_JSON_VALUE)
+    public Patient addPatient(@RequestBody Patient patient) {
     	return patientServ.create(patient);
     }
     
-    @PutMapping("/updatePatient")
-    public Patient updatePatient(@RequestParam("patient") Patient patient) {
+    @PutMapping(path = "/updatePatient",
+    		consumes = MediaType.APPLICATION_JSON_VALUE,
+    		produces = MediaType.APPLICATION_JSON_VALUE)
+    public Patient updatePatient(@RequestBody Patient patient) {
     	return patientServ.update(patient);
     }
     
