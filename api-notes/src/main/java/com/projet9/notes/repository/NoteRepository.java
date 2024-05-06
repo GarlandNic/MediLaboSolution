@@ -9,4 +9,6 @@ import com.projet9.notes.model.Note;
 @Repository
 public interface NoteRepository extends MongoRepository<Note, ObjectId> {
 
+	Iterable<Note> findByPatId(int id);
+
 }
