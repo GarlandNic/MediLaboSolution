@@ -11,8 +11,11 @@ import org.springframework.context.annotation.Bean;
 @SpringBootApplication
 public class MedilabGatewayApplication {
 	
-	private static final String API_PATIENTS_CREDENTIALS = "userForPatientAPI:passwordForPatientAPI";
+	private static final String API_PATIENTS_CREDENTIALS = "userForPatientsAPI:passwordForPatientsAPI";
 	private static final String API_PATIENTS_PATH = "http://localhost:8091"; 
+
+	private static final String API_NOTES_CREDENTIALS = "userForNotesAPI:passwordForNotesAPI";
+	private static final String API_NOTES_PATH = "http://localhost:8092"; 
 
 	public static void main(String[] args) {
 		SpringApplication.run(MedilabGatewayApplication.class, args);
@@ -23,6 +26,10 @@ public class MedilabGatewayApplication {
 		return builder.routes()
 				.route("path_patients", r -> r.path("/patients/**")
 						.filters(f -> f.rewritePath("/patients", "")
+								.addRequestHeader("Authorization", "Basic "+Base64.getEncoder().encodeToString(API_PATIENTS_CREDENTIALS.getBytes())))
+						.uri(API_PATIENTS_PATH))
+				.route("path_notes", r -> r.path("/notes/**")
+						.filters(f -> f.rewritePath("/notes", "")
 								.addRequestHeader("Authorization", "Basic "+Base64.getEncoder().encodeToString(API_PATIENTS_CREDENTIALS.getBytes())))
 						.uri(API_PATIENTS_PATH))
 //				.route("path_route", r -> r.path("/get")

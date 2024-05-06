@@ -1,4 +1,4 @@
-package com.projet9.patients.security;
+package com.projet9.notes.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,8 +16,8 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 public class SecurityConfig {
 	
-	private static final String CREDENTIALS_USERNAME = "userForPatientsAPI";
-	private static final String CREDENTIALS_PASSWORD = "passwordForPatientsAPI";
+	private static final String CREDENTIALS_USERNAME = "userForNoteAPI";
+	private static final String CREDENTIALS_PASSWORD = "passwordForNoteAPI";
 	
 	@Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
