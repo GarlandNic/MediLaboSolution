@@ -14,7 +14,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.projet9.front.model.Patient;
 
+import feign.Headers;
+
 @FeignClient(name="medilab-gateway", url="localhost:8090")
+@Headers("Authorization: Basic userForGateway:passwordForGateway")
 public interface GatewayProxy {
 
     @GetMapping("/patients/getPatients")

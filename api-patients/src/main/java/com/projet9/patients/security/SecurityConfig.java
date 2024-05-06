@@ -16,13 +16,15 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 public class SecurityConfig {
 	
+	private static final String CREDENTIALS_USERNAME = "userForPatientAPI";
+	private static final String CREDENTIALS_PASSWORD = "passwordForPatientAPI";
+	
 	@Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		http
 			.csrf(csrf -> csrf.disable())
 			.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-//			.authorizeHttpRequests(requests -> requests.anyRequest().authenticated())
-			.authorizeHttpRequests(requests -> requests.anyRequest().permitAll())
+			.authorizeHttpRequests(requests -> requests.anyRequest().authenticated())
 			.httpBasic(Customizer.withDefaults());
 
 		return http.build();
@@ -36,8 +38,8 @@ public class SecurityConfig {
 	@Bean
 	public UserDetailsService users() {
 		UserDetails user = User.builder()
-				.username("userOfPatients")
-				.password(passwordEncoder().encode("passwordOfPatient"))
+				.username(CREDENTIALS_USERNAME)
+				.password(passwordEncoder().encode(CREDENTIALS_PASSWORD))
 				.build();
 		return new InMemoryUserDetailsManager(user);
 	}
