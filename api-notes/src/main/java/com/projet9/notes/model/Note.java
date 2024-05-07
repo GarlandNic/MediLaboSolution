@@ -1,15 +1,16 @@
 package com.projet9.notes.model;
 
-import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
+import org.springframework.data.mongodb.core.mapping.FieldType;
 
 @Document(collection = "notes")
 public class Note {
 	
 	@Id
-	private ObjectId id;
+	@Field(targetType = FieldType.OBJECT_ID)
+	private String id;
 
 	private int patId;
 	
@@ -20,10 +21,10 @@ public class Note {
 
 	
 	
-	public ObjectId getId() {
+	public String getId() {
 		return id;
 	}
-	public void setId(ObjectId id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 	public int getPatId() {

@@ -85,14 +85,15 @@ public class MedilabFrontController {
 	
 	// notes
 	
-	@PostMapping(value = "/notes/modif/{id}")
-	public String modifNote(Model model, @PathVariable("id") final int patId, @ModelAttribute("note") Note note) {
+	@PostMapping(value = "/notes/modif/{id}", params= {"saveNote"})
+	public String modifNote(Model model, @PathVariable("id") final int patId, 
+			@ModelAttribute("thisNote") Note note, final HttpServletRequest req) {
 		noteServ.save(note);
 		return "redirect:/patients/"+patId;
 	}
 	
-	@PostMapping(value = "/notes/add/{id}")
-	public String addNewNote(Model model, @PathVariable("id") final int patId, @ModelAttribute("newNote") Note note) {
+	@PostMapping(value = "/notes/add/{patId}")
+	public String addNewNote(Model model, @PathVariable("patId") final int patId, @ModelAttribute("newNote") Note note) {
 		noteServ.saveNew(note);
 		return "redirect:/patients/"+patId;
 	}

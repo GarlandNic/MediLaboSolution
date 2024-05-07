@@ -3,7 +3,6 @@ package com.projet9.notes.service;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -36,7 +35,7 @@ public class NoteService {
 		return noteRepo.save(note);
 	}
 
-	public void delete(ObjectId id) {
+	public void delete(String id) {
 		noteRepo.deleteById(id);
 	}
 

@@ -81,18 +81,18 @@ Voici la fiche du patient :
 <h3>Notes pour ce patient :</h3>
 
 <table>
-	<tr th:each="note : ${listOfNotes}">
-		<form action="#" th:action="@{'/notes/modif/'+${patient.id}}" th:object="${note}" method="post">
+	<tr th:each="thisNote,iStat : ${listOfNotes}">
+	<form action="#" th:action="@{'/notes/modif/'+${patient.id}}" name="thisNote" method="post">
 		<td>
-			<input type="hidden" th:field="*{id}"/> 
-			<input type="hidden" th:field="*{patId}"/> 
-			<input type="hidden" th:field="*{patient}"/> 
-			<textarea rows="3" cols="50" th:field="*{note}"></textarea>
+			<input type="hidden" name="id" th:value="${thisNote.id}"/> 
+			<input type="hidden" name="patId" th:value="${thisNote.patId}"/> 
+			<input type="hidden" name="patient" th:value="${thisNote.patient}"/> 
+			<textarea rows="3" cols="50" name="note" th:text="${thisNote.note}"></textarea>
 		</td>
 		<td> 
-			<button type="submit">Enregistrer les modifications</button>
+			<button type="submit" name="saveNote" th:value="${iStat.index}">Enregistrer les modifications</button>
 		</td>
-		</form>
+	</form>
 	</tr>
 	<tr>
 		<form action="#" th:action="@{'/notes/add/'+${patient.id}}" th:object="${newNote}" method="post">

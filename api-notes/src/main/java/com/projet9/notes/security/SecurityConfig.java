@@ -16,8 +16,8 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 public class SecurityConfig {
 	
-	private static final String CREDENTIALS_USERNAME = "userForNoteAPI";
-	private static final String CREDENTIALS_PASSWORD = "passwordForNoteAPI";
+	private static final String CREDENTIALS_USERNAME = "userForNotesAPI";
+	private static final String CREDENTIALS_PASSWORD = "passwordForNotesAPI";
 	
 	@Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {

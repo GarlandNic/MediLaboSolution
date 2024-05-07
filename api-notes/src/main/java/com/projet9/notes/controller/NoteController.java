@@ -2,7 +2,6 @@ package com.projet9.notes.controller;
 
 import java.util.List;
 
-import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -47,7 +46,7 @@ public class NoteController {
     }
     
     @DeleteMapping("/deleteNote/{id}")
-    public void deleteNote(@PathVariable("id") ObjectId id) {
+    public void deleteNote(@PathVariable("id") String id) {
     	noteServ.delete(id);
     }
 
