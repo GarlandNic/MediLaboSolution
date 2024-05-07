@@ -7,6 +7,11 @@
 </head>
 <body>
 
+
+<form action="#" th:action="@{'/patients/listPatient'}" method="get">
+	<button type="submit">Retour à la liste des patients</button>
+</form>
+
 <div style="text-align: right;">
 	Vous êtes connecté en tant que : <b><span th:remove="tag" th:text="${username}">nobody</span></b>
 </div>
@@ -72,6 +77,36 @@ Voici la fiche du patient :
 
 </form>
 </div>
+
+<h3>Notes pour ce patient :</h3>
+
+<table>
+	<tr th:each="note : ${listOfNotes}">
+		<form action="#" th:action="@{'/notes/modif/'+${patient.id}}" th:object="${note}" method="post">
+		<td>
+			<input type="hidden" th:field="*{id}"/> 
+			<input type="hidden" th:field="*{patId}"/> 
+			<input type="hidden" th:field="*{patient}"/> 
+			<textarea rows="3" cols="50" th:field="*{note}"></textarea>
+		</td>
+		<td> 
+			<button type="submit">Enregistrer les modifications</button>
+		</td>
+		</form>
+	</tr>
+	<tr>
+		<form action="#" th:action="@{'/notes/add/'+${patient.id}}" th:object="${newNote}" method="post">
+		<td>
+			<input type="hidden" th:field="*{patId}"/> 
+			<input type="hidden" th:field="*{patient}"/> 
+			<textarea rows="3" cols="50" th:field="*{note}"></textarea>
+		</td>
+		<td> 
+			<button type="submit">Ajouter nouvelle note</button>
+		</td>
+		</form>
+	</tr>
+</table>
 
 <form action="#" th:action="@{'/patients/listPatient'}" method="get">
 	<button type="submit">Retour à la liste des patients</button>

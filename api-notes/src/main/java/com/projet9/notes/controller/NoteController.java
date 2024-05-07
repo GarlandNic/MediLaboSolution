@@ -46,7 +46,7 @@ public class NoteController {
     	return noteServ.update(note);
     }
     
-    @DeleteMapping("/deletePatient/{id}")
+    @DeleteMapping("/deleteNote/{id}")
     public void deleteNote(@PathVariable("id") ObjectId id) {
     	noteServ.delete(id);
     }

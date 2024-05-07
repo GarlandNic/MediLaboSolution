@@ -1,31 +1,24 @@
-package com.projet9.notes.model;
+package com.projet9.front.model;
 
-import org.bson.types.ObjectId;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.data.mongodb.core.mapping.Field;
-
-@Document(collection = "notes")
 public class Note {
 	
-	@Id
-	private ObjectId id;
-
+	private String id;
+	
 	private int patId;
 	
 	private String patient;
 	
-	@Field("note")
 	private String note;
+	
+	public Note() {}
+	public Note(Patient patient) {
+		this.id = null;
+		this.patId = patient.getId();
+		this.patient = patient.getLastName();
+		this.note = "";
+	}
 
 	
-	
-	public ObjectId getId() {
-		return id;
-	}
-	public void setId(ObjectId id) {
-		this.id = id;
-	}
 	public int getPatId() {
 		return patId;
 	}
@@ -43,6 +36,12 @@ public class Note {
 	}
 	public void setNote(String note) {
 		this.note = note;
+	}
+	public String getId() {
+		return id;
+	}
+	public void setId(String id) {
+		this.id = id;
 	}
 	
 }

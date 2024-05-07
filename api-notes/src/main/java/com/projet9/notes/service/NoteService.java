@@ -29,7 +29,7 @@ public class NoteService {
 	}
 
 	public Note create(Note note) {
-		return noteRepo.save(note);
+		return noteRepo.insert(note);
 	}
 
 	public Note update(Note note) {

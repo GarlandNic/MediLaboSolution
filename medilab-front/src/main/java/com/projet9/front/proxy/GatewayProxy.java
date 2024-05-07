@@ -10,9 +10,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import com.projet9.front.model.Patient;
+import com.projet9.front.model.Note;
 
 import feign.Headers;
 
@@ -38,5 +38,25 @@ public interface GatewayProxy {
     
     @DeleteMapping("/patients/deletePatient/{id}")
     public void deletePatient(@PathVariable("id") int id);
+
+    
+	@GetMapping("/notes/getNotes")
+	public List<Note> listOfNotes();
+	
+	@GetMapping("/notes/getNotesForPatient/{id}")
+	public List<Note> listNotesForPatient(@PathVariable("id") int id);
+	
+    @PostMapping(path = "/notes/addNote",
+    		consumes = MediaType.APPLICATION_JSON_VALUE,
+    		produces = MediaType.APPLICATION_JSON_VALUE)
+    public Note addNote(@RequestBody Note note);
+    
+    @PutMapping(path = "/notes/updateNote",
+    		consumes = MediaType.APPLICATION_JSON_VALUE,
+    		produces = MediaType.APPLICATION_JSON_VALUE)
+    public Note updateNote(@RequestBody Note note);
+    
+    @DeleteMapping("/notes/deleteNote/{id}")
+    public void deleteNote(@PathVariable("id") String id);
 
 }
