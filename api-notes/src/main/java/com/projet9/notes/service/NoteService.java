@@ -39,4 +39,10 @@ public class NoteService {
 		noteRepo.deleteById(id);
 	}
 
+	public List<String> listContentsFofPatient(int patId) {
+		List<String> result = new ArrayList<>();
+		noteRepo.findByPatId(patId).forEach(n -> result.add(n.getNote()));
+		return result;
+	}
+
 }
