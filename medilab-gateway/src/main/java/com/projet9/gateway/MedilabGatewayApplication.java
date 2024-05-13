@@ -17,6 +17,9 @@ public class MedilabGatewayApplication {
 	private static final String API_NOTES_CREDENTIALS = "userForNotesAPI:passwordForNotesAPI";
 	private static final String API_NOTES_PATH = "http://localhost:8092"; 
 
+	private static final String API_DIABETE_CREDENTIALS = "userForDiabeteAPI:passwordForDiabeteAPI";
+	private static final String API_DIABETE_PATH = "http://localhost:8093"; 
+
 	public static void main(String[] args) {
 		SpringApplication.run(MedilabGatewayApplication.class, args);
 	}
@@ -32,15 +35,10 @@ public class MedilabGatewayApplication {
 						.filters(f -> f.rewritePath("/notes", "")
 								.addRequestHeader("Authorization", "Basic "+Base64.getEncoder().encodeToString(API_NOTES_CREDENTIALS.getBytes())))
 						.uri(API_NOTES_PATH))
-//				.route("path_route", r -> r.path("/get")
-//						.filters(f -> f.addRequestHeader("Hello", "World"))
-//						.uri("http://httpbin.org"))
-//				.route("circuit_breaker", p -> p
-//						.host("*.circuitbreaker.com")
-//						.filters(f -> f.circuitBreaker(config -> config
-//								.setName("mycmd")
-//								.setFallbackUri("forward:/fallback"))) //endpoint /fallback à définir dans controller 
-//						.uri("http://httpbin.org:80"))
+				.route("path_diabete", r -> r.path("/diabete/**")
+						.filters(f -> f.rewritePath("/diabete", "")
+								.addRequestHeader("Authorization", "Basic "+Base64.getEncoder().encodeToString(API_DIABETE_CREDENTIALS.getBytes())))
+						.uri(API_DIABETE_PATH))
 			.build();
 	}
 
