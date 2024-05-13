@@ -15,6 +15,7 @@ import com.projet9.front.model.Note;
 import com.projet9.front.model.Patient;
 import com.projet9.front.service.NoteService;
 import com.projet9.front.service.PatientService;
+import com.projet9.front.service.RiskService;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -26,6 +27,9 @@ public class MedilabFrontController {
 	
 	@Autowired
 	NoteService noteServ;
+	
+	@Autowired
+	RiskService riskServ;
 	
 	// patients
 	
@@ -113,6 +117,7 @@ public class MedilabFrontController {
 		model.addAttribute("patient", patient);
 		model.addAttribute("listOfNotes", noteServ.getListOfNotes(patient.getId()));
 		model.addAttribute("newNote", new Note(patient));
+		model.addAttribute("risque", riskServ.getRisk(patient.getId()));
 		return "fiche_patient";
 	}
 	

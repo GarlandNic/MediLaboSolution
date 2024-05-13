@@ -100,7 +100,7 @@ public class DiabeteService {
 //		● risque limité (Borderline) : Le dossier du patient contient entre deux et cinq
 //		déclencheurs et le patient est âgé de plus de 30 ans ;
 		if(	(patient.getAge()>30 && patient.getKeywordNumber()>=2)	) {
-			return Risk.EarlyOnset;
+			return Risk.Borderline;
 		}
 		
 		return Risk.None;

@@ -1,1 +1,26 @@
 @charset "UTF-8";
+
+.None {
+	
+}
+.Borderline {
+	font-size: 1.5em;
+/* 	text-decoration-line: underline; */
+/*   	text-decoration-style: wavy; */
+/*   	text-decoration-color: red; */
+}
+.InDanger {
+	font-size: 2em;
+	color: orange;
+/* 	text-decoration-line: underline; */
+/*   	text-decoration-style: wavy; */
+/*   	text-decoration-color: red; */
+}
+.EarlyOnset {
+	font-size: 2.5em;
+	color: red;
+/* 	font-weight: bolder; */
+/* 	text-decoration-line: underline; */
+/*   	text-decoration-style: wavy; */
+/*   	text-decoration-color: red; */
+}

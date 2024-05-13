@@ -108,9 +108,15 @@ Voici la fiche du patient :
 	</tr>
 </table>
 
+<br/>
+Niveau de risque estimé : <span th:text="${risque.toHtml()}" th:class="${risque.toString()}"></span>.
+<br/>
+
+<p>
 <form action="#" th:action="@{'/patients/listPatient'}" method="get">
 	<button type="submit">Retour à la liste des patients</button>
 </form>
+</p>
 
 </body>
 </html>
