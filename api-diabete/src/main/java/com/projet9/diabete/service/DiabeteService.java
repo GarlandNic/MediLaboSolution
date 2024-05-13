@@ -46,10 +46,7 @@ public class DiabeteService {
 					break;
 				}
 			}
-			if(match) {
-				result++;
-				break;
-			}
+			if(match) result++;
 		}
 		
 		return result;
@@ -64,7 +61,7 @@ public class DiabeteService {
 			notesLst = result;
 			result = new ArrayList<>();
 			for(String notePart : notesLst) {
-				result.addAll(Arrays.asList(notePart.split("(?i)"+decl)));
+				result.addAll(Arrays.asList(notePart.split("(?i)((?="+decl+")|(?<="+decl+"))")));
 			}
 			if(result.get(0).equalsIgnoreCase(decl)) declFirst=true;
 		}
