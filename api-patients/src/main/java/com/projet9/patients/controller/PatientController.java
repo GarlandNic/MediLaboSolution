@@ -1,5 +1,6 @@
 package com.projet9.patients.controller;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 
@@ -51,6 +52,16 @@ public class PatientController {
     @DeleteMapping("/deletePatient/{id}")
     public void deletePatient(@PathVariable("id") int id) {
     	patientServ.delete(id);
+    }
+    
+    @GetMapping("/getGenderOf/{id}") 
+    public String getGenderOf(@PathVariable("id") int id) {
+    	return patientServ.genderOf(id);
+    }
+    
+    @GetMapping("/getBirthOf/{id}") 
+    public LocalDate getBirthOf(@PathVariable("id") int id) {
+    	return patientServ.birthOf(id);
     }
     
 }

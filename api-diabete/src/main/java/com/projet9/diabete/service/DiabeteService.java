@@ -7,6 +7,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.projet9.diabete.model.PatientRisk;
+import com.projet9.diabete.model.PatientRisk.Gender;
 import com.projet9.diabete.proxy.GatewayProxy;
 
 @Service
@@ -20,7 +22,7 @@ public class DiabeteService {
 		 "fumeur", "fumeuse",
 		 "anormal",
 		 "cholestérol",
-		 "vertiges",
+		 "vertige",
 		 "rechute",
 		 "réaction",
 		 "anticorps"};
@@ -35,7 +37,7 @@ public class DiabeteService {
 	@Autowired
 	GatewayProxy gate;
 
-	public int riskCounting(List<String> notesLst) {
+	public int keywordCounting(List<String> notesLst) {
 		int result = 0;
 		boolean match = false;
 		for(String decl : DECLENCHEURS) {
@@ -70,8 +72,38 @@ public class DiabeteService {
 		return result;
 	}
 
-	public int riskForPatient(int id) {
-		return riskCounting(gate.listContentsForPatient(id));
+	public int keywordForPatient(int id) {
+		return keywordCounting(gate.listContentsForPatient(id));
+	}
+
+	public Risk riskForPatient(int id) {
+		PatientRisk patient = new PatientRisk(id, gate.getBirthOf(id), gate.getGenderOf(id), keywordForPatient(id));
+		
+//		● apparition précoce (Early onset) : Encore une fois, cela dépend de l'âge et du sexe. Si
+//		le patient est un homme de moins de 30 ans, alors au moins cinq termes déclencheurs
+//		sont nécessaires. Si le patient est une femme et a moins de 30 ans, il faudra au moins
+//		sept termes déclencheurs. Si le patient a plus de 30 ans, alors il en faudra huit ou plus.
+		if(	(patient.getAge()<=30 && patient.getGender()==Gender.M && patient.getKeywordNumber()>=5) ||
+			(patient.getAge()<=30 && patient.getGender()==Gender.F && patient.getKeywordNumber()>=7) ||
+			(patient.getAge()>30 && patient.getKeywordNumber()>=8)	) {
+			return Risk.EarlyOnset;
+		}
+//		● danger (In Danger) : Dépend de l'âge et du sexe du patient. Si le patient est un homme
+//		de moins de 30 ans, alors trois termes déclencheurs doivent être présents. Si le patient
+//		est une femme et a moins de 30 ans, il faudra quatre termes déclencheurs. Si le patient
+//		a plus de 30 ans, alors il en faudra six ou sept ;
+		if(	(patient.getAge()<=30 && patient.getGender()==Gender.M && patient.getKeywordNumber()>=3) ||
+			(patient.getAge()<=30 && patient.getGender()==Gender.F && patient.getKeywordNumber()>=4) ||
+			(patient.getAge()>30 && patient.getKeywordNumber()>=6)	) {
+			return Risk.InDanger;
+		}
+//		● risque limité (Borderline) : Le dossier du patient contient entre deux et cinq
+//		déclencheurs et le patient est âgé de plus de 30 ans ;
+		if(	(patient.getAge()>30 && patient.getKeywordNumber()>=2)	) {
+			return Risk.EarlyOnset;
+		}
+		
+		return Risk.None;
 	}
 
 }

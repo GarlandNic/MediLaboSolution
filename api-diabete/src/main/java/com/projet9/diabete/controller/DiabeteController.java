@@ -18,11 +18,11 @@ public class DiabeteController {
 	@Autowired
 	DiabeteService diabeteServ;
 	
-	@PostMapping(path = "/riskCounting",
+	@PostMapping(path = "/keywordCounting",
     		consumes = MediaType.APPLICATION_JSON_VALUE,
     		produces = MediaType.APPLICATION_JSON_VALUE)
-    public int riskCounting(@RequestBody List<String> notesLst) {
-    	return diabeteServ.riskCounting(notesLst);
+    public int keywordCounting(@RequestBody List<String> notesLst) {
+    	return diabeteServ.keywordCounting(notesLst);
     }
 	
 	@PostMapping(path = "/splitString",
@@ -32,10 +32,14 @@ public class DiabeteController {
     	return diabeteServ.splitString(note);
     }
 	
-	
+	@GetMapping("/getKeywordForPatient/{id}")
+	public int keywordForPatient(@PathVariable("id") int id) {
+		return diabeteServ.keywordForPatient(id);
+	}
+
 	@GetMapping("/getRiskForPatient/{id}")
-	public int riskForPatient(@PathVariable("id") int id) {
-		return diabeteServ.riskForPatient(id);
+	public String riskForPatient(@PathVariable("id") int id) {
+		return diabeteServ.riskForPatient(id).toString();
 	}
 
 }

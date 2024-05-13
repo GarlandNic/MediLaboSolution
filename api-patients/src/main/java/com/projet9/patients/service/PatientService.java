@@ -1,5 +1,6 @@
 package com.projet9.patients.service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -46,7 +47,17 @@ public class PatientService {
 	public void delete(int id) {
 		patientRepo.deleteById(id);
 	}
-	
-	
+
+	public String genderOf(int id) {
+		Optional<Patient> p = patientRepo.findById(id);
+		if(p.isEmpty()) return null;
+		else return p.get().getGender().toString();
+	}
+
+	public LocalDate birthOf(int id) {
+		Optional<Patient> p = patientRepo.findById(id);
+		if(p.isEmpty()) return null;
+		else return p.get().getDateOfBirth();
+	}	
 
 }
