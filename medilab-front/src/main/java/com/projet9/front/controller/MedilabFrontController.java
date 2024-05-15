@@ -118,6 +118,7 @@ public class MedilabFrontController {
 		model.addAttribute("listOfNotes", noteServ.getListOfNotes(patient.getId()));
 		model.addAttribute("newNote", new Note(patient));
 		model.addAttribute("risque", riskServ.getRisk(patient.getId()));
+		model.addAttribute("nbRisk", riskServ.getNbRisk(patient.getId()));
 		return "fiche_patient";
 	}
 	

@@ -59,7 +59,12 @@ public interface GatewayProxy {
     @DeleteMapping("/notes/deleteNote/{id}")
     public void deleteNote(@PathVariable("id") String id);
 
+    
 	@GetMapping("/diabete/getRiskForPatient/{id}")
 	public String riskForPatient(@PathVariable("id") int id);
+	
+	@GetMapping("/diabete/getKeywordForPatient/{id}")
+	public int keywordForPatient(@PathVariable("id") int id);
+
 
 }

@@ -15,7 +15,9 @@ public class RiskService {
 	public Risk getRisk(int id) {
 		return Risk.valueOf(gate.riskForPatient(id));
 	}
-	
-	
+
+	public int getNbRisk(int id) {
+		return gate.keywordForPatient(id);
+	}
 
 }

@@ -109,7 +109,7 @@ Voici la fiche du patient :
 </table>
 
 <br/>
-Niveau de risque estimé : <span th:text="${risque.toHtml()}" th:class="${risque.toString()}"></span>.
+Niveau de risque estimé : <span th:text="${risque.toHtml()}" th:class="${risque.toString()}" th:title="${'Nombre de termes déclencheurs détectés : '+nbRisk}"></span>.
 <br/>
 
 <p>
