@@ -45,4 +45,8 @@ public class NoteService {
 		return result;
 	}
 
+	public void deleteByPatId(int patId) {
+		noteRepo.deleteAllByPatId(patId);
+	}
+
 }

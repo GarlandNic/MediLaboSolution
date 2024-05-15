@@ -50,6 +50,11 @@ public class NoteController {
     	noteServ.delete(id);
     }
     
+    @DeleteMapping("/deleteNotesForPatient/{patId}")
+    public void deleteNotesForPatient(@PathVariable("patId") int patId) {
+    	noteServ.deleteByPatId(patId);
+    }
+    
     @GetMapping("/getContentsForPatient/{patId}")
     public List<String> listContentsForPatient(@PathVariable("patId") int patId) {
     	return noteServ.listContentsFofPatient(patId);

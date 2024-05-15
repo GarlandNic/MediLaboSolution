@@ -68,16 +68,19 @@ Voici la fiche du patient :
                     			th:value="${patient.id}">Modifier</button>
     <th:block th:if="${modif != null && modif == patient.id}">
 		<button type="submit" name="save" th:value="${patient.id}">Enregistrer les modifications</button> 
-        <button th:unless="${confirm != null && confirm == patient.id}"  type="submit" name="supprimer" 
-        		th:value="${patient.id}">Supprimer le patient</button> 
-       	<button th:if="${confirm != null && confirm == patient.id}" type="submit" name="confirmSuppr"
-       			th:value="${patient.id}">Confirmer la suppression ?</button> 
+		<th:block th:unless=${newPatient}>
+        	<button th:unless="${confirm != null && confirm == patient.id}"  type="submit" name="supprimer" 
+        			th:value="${patient.id}">Supprimer le patient</button> 
+       		<button th:if="${confirm != null && confirm == patient.id}" type="submit" name="confirmSuppr"
+       				th:value="${patient.id}">Confirmer la suppression ?</button> 
+       	</th:block>
     </th:block>
 </div>
 
 </form>
 </div>
 
+<th:block th:unless="${newPatient}">
 <h3>Notes pour ce patient :</h3>
 
 <table>
@@ -111,6 +114,7 @@ Voici la fiche du patient :
 <br/>
 Niveau de risque estimé : <span th:text="${risque.toHtml()}" th:class="${risque.toString()}" th:title="${'Nombre de termes déclencheurs détectés : '+nbRisk}"></span>.
 <br/>
+</th:block>
 
 <p>
 <form action="#" th:action="@{'/patients/listPatient'}" method="get">

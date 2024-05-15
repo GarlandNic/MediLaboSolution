@@ -10,4 +10,6 @@ public interface NoteRepository extends MongoRepository<Note, String> {
 
 	Iterable<Note> findByPatId(int id);
 
+	void deleteAllByPatId(int patId);
+
 }

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import com.projet9.front.model.Note;
 import com.projet9.front.model.Patient;
+import com.projet9.front.model.Risk;
 import com.projet9.front.service.NoteService;
 import com.projet9.front.service.PatientService;
 import com.projet9.front.service.RiskService;
@@ -47,7 +48,7 @@ public class MedilabFrontController {
 	public String newPatientForm(Model model, Principal principal) {
 		Patient patient = new Patient();
 		model.addAttribute("modif", patient.getId());
-		return displayHtmlFichePatient(model, principal, patient);		
+		return displayHtmlFichePatient(model, principal, patient, true);		
 	}
 	
 	@GetMapping("/patients/{id}")
@@ -83,8 +84,9 @@ public class MedilabFrontController {
 	@PostMapping(value="/patients/modif/{id}", params={"confirmSuppr"})
 	public String suppressionPatient(Model model, Principal principal, @PathVariable("id") final int id, 
 			@ModelAttribute("patient") Patient patient, final HttpServletRequest req) {
+		noteServ.deleteAllNoteForPatient(patient.getId());
 		patientServ.delete(patient);
-		return "redirect:/patients/listPatient";	
+		return "redirect:/patients/listPatient";
 	}
 	
 	// notes
@@ -113,12 +115,18 @@ public class MedilabFrontController {
 	}
 	
 	private String displayHtmlFichePatient(Model model, Principal principal, Patient patient) {
+		return displayHtmlFichePatient(model, principal, patient, false);
+	}
+	private String displayHtmlFichePatient(Model model, Principal principal, Patient patient, boolean newPatient) {
 		model.addAttribute("username", principal.getName());
 		model.addAttribute("patient", patient);
-		model.addAttribute("listOfNotes", noteServ.getListOfNotes(patient.getId()));
-		model.addAttribute("newNote", new Note(patient));
-		model.addAttribute("risque", riskServ.getRisk(patient.getId()));
-		model.addAttribute("nbRisk", riskServ.getNbRisk(patient.getId()));
+		model.addAttribute("newPatient", newPatient);
+		if(!newPatient) {
+			model.addAttribute("listOfNotes", noteServ.getListOfNotes(patient.getId()));
+			model.addAttribute("newNote", new Note(patient));
+			model.addAttribute("risque", riskServ.getRisk(patient.getId()));
+			model.addAttribute("nbRisk", riskServ.getNbRisk(patient.getId()));			
+		}
 		return "fiche_patient";
 	}
 	

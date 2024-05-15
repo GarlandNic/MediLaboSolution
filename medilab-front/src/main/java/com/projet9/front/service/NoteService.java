@@ -34,5 +34,17 @@ public class NoteService {
 			return gate.addNote(note);
 		}
 	}
+	
+	public void deleteNote(Note note) {
+		gate.deleteNote(note.getId());
+	}
+
+	public void deleteListOfNote(List<Note> listOfNotes) {
+		listOfNotes.forEach(n -> deleteNote(n));
+	}
+
+	public void deleteAllNoteForPatient(int patId) {
+		gate.deleteNotesForPatient(patId);
+	}
 
 }
