@@ -1,10 +1,9 @@
-package com.projet9.notes.security;
+package com.projet9.gateway.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -17,8 +16,8 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 public class SecurityConfig {
 	
-	private static final String CREDENTIALS_USERNAME = "userForNotesAPI";
-	private static final String CREDENTIALS_PASSWORD = "passwordForNotesAPI";
+	private static final String CREDENTIALS_USERNAME = "userForGateway";
+	private static final String CREDENTIALS_PASSWORD = "passwordForGateway";
 	
 	@Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {

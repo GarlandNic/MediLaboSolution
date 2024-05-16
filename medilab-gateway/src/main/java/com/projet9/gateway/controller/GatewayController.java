@@ -1,16 +1,12 @@
-package com.projet9.gateway;
+package com.projet9.gateway.controller;
 
-import java.util.Base64;
+import org.springframework.cloud.gateway.mvc.ProxyExchange;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean;
-import org.springframework.web.servlet.function.RouterFunction;
-import org.springframework.web.servlet.function.ServerResponse;
-import org.springframework.cloud.gateway.server.mvc.handler.GatewayRouterFunctions;
-
-@SpringBootApplication
-public class MedilabGatewayApplication {
+@RestController
+public class GatewayController {
 	
 	private static final String API_PATIENTS_CREDENTIALS = "userForPatientsAPI:passwordForPatientsAPI";
 	private static final String API_PATIENTS_PATH = "https://localhost:8091"; 
@@ -20,10 +16,13 @@ public class MedilabGatewayApplication {
 
 	private static final String API_DIABETE_CREDENTIALS = "userForDiabeteAPI:passwordForDiabeteAPI";
 	private static final String API_DIABETE_PATH = "https://localhost:8093"; 
-
-	public static void main(String[] args) {
-		SpringApplication.run(MedilabGatewayApplication.class, args);
+	
+	@RequestMapping("/patients/**")
+	public ResponseEntity<?> proxyPatient(ProxyExchange proxy) throws Exception {
+	  String path = proxy.path("/proxy/path/");
+	  return proxy.uri(home.toString() + "/foos/" + path).get();
 	}
+	
 //	
 //	@Bean
 //	public RouterFunction<ServerResponse> customRoute() {
