@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import com.projet9.front.model.Patient;
 import com.projet9.front.model.Note;
 
-@FeignClient(name="medilab-gateway", url="https://localhost:8090", configuration = CustomFeignConfiguration.class)
+@FeignClient(name="medilab-gateway", url="localhost:8090", configuration = CustomFeignConfiguration.class)
 public interface GatewayProxy {
 	
     @GetMapping("/patients/getPatients")

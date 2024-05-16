@@ -7,7 +7,7 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
-@FeignClient(name="medilab-gateway", url="https://localhost:8090", configuration = CustomFeignConfiguration.class)
+@FeignClient(name="medilab-gateway", url="localhost:8090", configuration = CustomFeignConfiguration.class)
 public interface GatewayProxy {
 	
     @GetMapping("/notes/getContentsForPatient/{patId}")
