@@ -3,7 +3,6 @@ package com.projet9.patients.service;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,12 +22,6 @@ public class PatientService {
 		patientRepo.findAll().forEach(p -> result.add(p));
 		return result;
 	}
-
-//	public List<Patient> patientBy(Map<String, String> param) {
-//		List<Patient> result = new ArrayList<>();
-//		patientRepo.findAll().forEach(p -> result.add(p));
-//		return result;
-//	}
 
 	public Patient patientById(int id) {
 		Optional<Patient> p = patientRepo.findById(id);

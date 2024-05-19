@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import com.projet9.front.model.Note;
 import com.projet9.front.model.Patient;
-import com.projet9.front.model.Risk;
 import com.projet9.front.service.NoteService;
 import com.projet9.front.service.PatientService;
 import com.projet9.front.service.RiskService;
