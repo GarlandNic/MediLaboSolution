@@ -1,10 +1,10 @@
-package com.projet9.MediLaboSolution;
+package com.projet9.front;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class ApiPatientsApplicationTests {
+class MedilabFrontApplicationTests {
 
 	@Test
 	void contextLoads() {
