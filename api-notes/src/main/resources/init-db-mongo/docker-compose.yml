@@ -1,0 +1,22 @@
+
+# docker-compose pour init-db-mongo
+# destiné à être lancé 1 seule fois pour initialiser la base de données mongoDB
+
+version: '3.8'
+
+services:
+  db_mongo:
+    build: .
+    container_name: mongodb
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: rootpassword
+      MONGO_INITDB_DATABASE: mydatabase
+    ports:
+      - "27018:27017"
+    volumes:
+      - notes_db:/data/db
+
+volumes:
+  notes_db:
+    external: true

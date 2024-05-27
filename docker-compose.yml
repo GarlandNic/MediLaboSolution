@@ -1,31 +1,37 @@
+
+# docker-compose pour l'ensemble du projet MediLaboSolution
+# pour l'instant on teste juste l'api-patient et son mysql
+
 version: '3.8'
 
 services:
-  db:
+  db_sql:
     image: mysql:8.0
     container_name: mysql
     environment:
       MYSQL_ROOT_PASSWORD: rootpassword
-      MYSQL_DATABASE: patientsdb
+      MYSQL_DATABASE: mediLabPatients
       MYSQL_USER: user
       MYSQL_PASSWORD: password
     ports:
-      - "3306:3306"
+      - "3307:3306"
     volumes:
-      - mysql_data:/var/lib/mysql
+      - patients_db:/var/lib/mysql
 
-  app:
+  api_patients:
     build: .
     container_name: api-patients
     ports:
-      - "8080:8080"
+      - "8091:8091"
     depends_on:
-      - db
+      - db_sql
     environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/patientsdb
+      SPRING_DATASOURCE_URL: jdbc:mysql://db_sql:3307
       SPRING_DATASOURCE_USERNAME: user
       SPRING_DATASOURCE_PASSWORD: password
 
 volumes:
-  mysql_data:
-    driver: local
+  patients_db:
+    external: true
+  notes_db:
+    external: true

@@ -1,6 +1,5 @@
 .mvn/
 .settings/
-target/
 .classpath
 .gitignore
 .project

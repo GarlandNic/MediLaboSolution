@@ -1,0 +1,24 @@
+
+# docker-compose pour init-db-mysql
+# destiné à être lancé 1 seule fois pour initialiser la base de données mysql
+
+version: '3.8'
+
+services:
+  db_sql:
+    build: .
+    container_name: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: mediLabPatients
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+    ports:
+      - "3307:3306"
+    volumes:
+      - patients_db:/var/lib/mysql
+
+volumes:
+  patients_db:
+    external: true
+
