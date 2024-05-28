@@ -2,7 +2,7 @@
 # Dockerfile pour api-patients
 
 # Utiliser une image de base OpenJDK
-FROM openjdk:11-jre-slim
+FROM eclipse-temurin:17-jdk-jammy
 
 # Créer un répertoire de travail
 WORKDIR /app
