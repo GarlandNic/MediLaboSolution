@@ -10,19 +10,23 @@ import java.util.Base64;
 
 import org.springframework.cloud.gateway.server.mvc.handler.GatewayRouterFunctions;
 import org.springframework.cloud.gateway.server.mvc.handler.HandlerFunctions;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.gateway.server.mvc.filter.BeforeFilterFunctions;
 
 @Configuration
 public class RouteConfiguration {
 	
+	@Value("${my.patients.url}")
+	private String API_PATIENTS_PATH; 
 	private static final String API_PATIENTS_CREDENTIALS = "userForPatientsAPI:passwordForPatientsAPI";
-	private static final String API_PATIENTS_PATH = "http://localhost:8091"; 
 
+	@Value("${my.notes.url}")
+	private String API_NOTES_PATH; 
 	private static final String API_NOTES_CREDENTIALS = "userForNotesAPI:passwordForNotesAPI";
-	private static final String API_NOTES_PATH = "http://localhost:8092"; 
 
+	@Value("${my.diabete.url}")
+	private String API_DIABETE_PATH;
 	private static final String API_DIABETE_CREDENTIALS = "userForDiabeteAPI:passwordForDiabeteAPI";
-	private static final String API_DIABETE_PATH = "http://localhost:8093"; 
 
     @Bean
     public RouterFunction<ServerResponse> patientsRoute() {

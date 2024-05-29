@@ -21,9 +21,7 @@ services:
     image: mongo:4.4
     container_name: mongodb
     environment:
-      MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: rootpassword
-      MONGO_INITDB_DATABASE: mydatabase
+      MONGO_INITDB_DATABASE: mediLabNotes
     ports:
       - "27018:27017"
     volumes:
@@ -48,6 +46,34 @@ services:
       - "8092:8092"
     depends_on:
       - db_mongo
+    environment:
+      SPRING_MONGO_HOST: mongodb
+
+  api_diabete:
+    build: ./api-diabete
+    container_name: api-diabete
+    ports:
+      - "8093:8093"
+    environment:
+      SPRING_MEDILAB_GATEWAY_URL: medilab-gateway:8090
+
+  medilab_gateway:
+    build: ./medilab-gateway
+    container_name: medilab-gateway
+    ports:
+      - "8090:8090"
+    environment:
+      SPRING_MEDILAB_API_PATIENTS: http://api-patients:8091
+      SPRING_MEDILAB_API_NOTES: http://api-notes:8092
+      SPRING_MEDILAB_API_DIABETE: http://api-diabete:8093
+
+  medilab_front:
+    build: ./medilab-front
+    container_name: medilab-front
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_MEDILAB_GATEWAY_URL: medilab-gateway:8090
 
 volumes:
   patients_db:
