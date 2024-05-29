@@ -1,6 +1,7 @@
 
 # docker-compose pour l'ensemble du projet MediLaboSolution
 # pour l'instant on teste juste l'api-patient et son mysql
+# + mongo et api_notes
 
 services:
   db_sql:
@@ -15,6 +16,18 @@ services:
       - "3307:3306"
     volumes:
       - patients_db:/var/lib/mysql
+ 
+  db_mongo:
+    image: mongo:4.4
+    container_name: mongodb
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: rootpassword
+      MONGO_INITDB_DATABASE: mydatabase
+    ports:
+      - "27018:27017"
+    volumes:
+      - notes_db:/data/db
 
   api_patients:
     build: ./api-patients
@@ -27,6 +40,14 @@ services:
       SPRING_MYSQL_URL: jdbc:mysql://db_sql:3306
       SPRING_MYSQL_USERNAME: user
       SPRING_MYSQL_PASSWORD: password
+
+  api_notes:
+    build: ./api-notes
+    container_name: api-notes
+    ports:
+      - "8092:8092"
+    depends_on:
+      - db_mongo
 
 volumes:
   patients_db:
