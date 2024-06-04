@@ -81,7 +81,7 @@ L'identifiant et le mot de passe sont inscrit en dur dans le code.
 
 #### `medilab-gateway`
 Le microservice `medilab-gateway` écoute sur le port 8090.
-Il utilise la librairie `spring-cloud-starter-gateway-mvc` afin de manipuler les réquêtes reçues.
+Il utilise la librairie `spring-cloud-starter-gateway-mvc` afin de manipuler les requêtes reçues.
 Les requêtes sont modifiées et renvoyées vers les API correspondantes : `api-patients`, `api-notes`, ou `api-diabete`
 La sécurité est assurée par une authentification Basic *Stateless* dont l'identifiant et le mot de passe sont connus de `medilab-front` et de `api-diabete`.
 
@@ -110,7 +110,7 @@ La sécurité est assurée par une authentification Basic *Stateless* dont l'ide
 #### `api-diabete`
 Le microservice `api-diabete` écoute sur le port 8093.
 Il a pour mission de calculer le niveau de risque d'un patient donné.
-Pour ce faire, il accède aux `api-patients` et `api-notes` via `medilab-gateway` afin d'obtenir les informations pertinantes.
+Pour ce faire, il accède aux `api-patients` et `api-notes` via `medilab-gateway` afin d'obtenir les informations pertinentes.
 La sécurité est assurée par une authentification Basic *Stateless* dont l'identifiant et le mot de passe sont connus de `medilab-gateway`.
 
 
@@ -118,7 +118,7 @@ La sécurité est assurée par une authentification Basic *Stateless* dont l'ide
 
 L'application a été dockerisée.
 Pour ce faire, il y a un `Dockerfile` dans chacun des microservices, ainsi qu'un `docker-compose.yml` à la racine du projet.
-Chaque microservice a été compilé indépendemment (les fichiers *.jar* se trouve dans les dossiers *target* de chacun).
+Chaque microservice a été compilé indépendamment (les fichiers *.jar* se trouve dans les dossiers *target* de chacun).
 En plus des 5 services correspondant aux 5 microservices, le `docker-compose.yml` construit un service mysql `db_sql` reposant sur un volume externe `patients_db` et un service mongoDB `db_mongo` reposant sur un volume externe `notes_db` afin de faire persister les données.
 
 Ces 2 volumes externes doivent être initialisés avant le pouvoir lancer le `docker-compose.yml`. 
@@ -133,9 +133,50 @@ En lançant ce fichier `docker-compose.yml`, on va créer la base de données et
 
 ### Amélioration du design
 
+Le design actuel des pages html est extrêmement sobre.
+La présentation pourra être repensé, avec par exemple, la présence du logo de l'application en haut de page, et des mentions légales en bas de page.  
+La page de connexion est actuellement la page par défaut de Spring Boot Security, mais il peut être envisagé de la remplacer par une page customisée.
 
 
 ### Sécurisation de l'accès
 
+Actuellement, la connexion à l'application (au *front*) se fait par un nom d'utilisateur et mot de passe unique, codé en dur dans le code (et avec un mot de passe particulièrement facile à deviner).
+Pour une réelle application, il faudra modifier ça.
+On pourra mettre en place une authentification avec une liste d'utilisateurs/mots de passe enregistrés dans une base de données par exemple, et contraindre l'utilisation de mots de passe complexe.
+
+Les autres microservices sont accessibles sans passer par le *front* (par exemple avec Postman).
+Il faut donc qu'ils soient sécurisées.
+Actuellement, ils sont protégés par une authentification *stateless* Basic, qui utilise un unique nom d'utilisateur et mot de passe, renseignés en dur dans le code.
+Il pourrait être intéressant de remplacer cela par une authentification par token ou par un protocole RSA.
+
+
 ### Green code
+
+Le *green code*, ou la programmation écologique ou éco-responsable, consiste à prendre en compte l'impact environnemental de son application.
+Idéalement, une application ne doit pas consommer trop de CPU (de puissance de calcul), elle ne doit pas utiliser ou réserver trop de place mémoire (valable pour la mémoire vive mais aussi pour la mémoire disque), elle doit limiter ses accès disque, et elle doit préserver au maximum la bande passante en réduisant ses communications internet.
+
+Pour notre application, voici quelques axes d'amélioration ou de vigilance :
+- Pour les pages html, si on souhaite les développer davantage, on prendra soin de ne pas les surcharger d'images inutiles.
+Les images en question devront être compressées côté serveur conformément à leur résolution d'affichage (il ne faut pas envoyer une image en ultra-haute définition tout en demandant au navigateur du client de l'afficher en petit).
+- Actuellement, le procédé de confirmation qu'on a implémenté lorsque l'utilisateur veut supprimer un patient se fait côté serveur avec Thymeleaf.
+Cela nécessite de renvoyer l'intégralité de la page html à chaque fois.
+Une amélioration possible serait de mettre cette confirmation côté client avec du javascript par exemple.
+- Dans notre application, il y a des *endpoints* et des fonctionnalités qui ne sont pas utilisées. 
+Par exemple, l'API *diabete* peut découper une note (la chaîne de caractères) afin d'en faire ressortir les mots-clés détectés.
+Ces fonctions non-utilisé prennent tout de même une place inutile dans le code compilé (le fichier *.jar*) et dans les images Docker qui en résultent.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
