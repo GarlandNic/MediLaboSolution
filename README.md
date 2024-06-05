@@ -41,6 +41,8 @@ Avec cette application le médecin est capable de :
 
 ## Outils et versions
 
+Ont été utilisés pour réaliser ce projet : 
+
 - Java 17
 - Spring boot v3.3.0-SNAPSHOT
 - Thymeleaf v 3.1.2.RELEASE
@@ -49,6 +51,81 @@ Avec cette application le médecin est capable de :
 - Docker v26.0.0
 - Eclipse v4.25.0
 - Maven v3.9.5
+
+### Docker
+
+L'application a été dockerisée.
+Pour ce faire, il y a un `Dockerfile` dans chacun des microservices, ainsi qu'un `docker-compose.yml` à la racine du projet.
+Chaque microservice a été compilé indépendamment (les fichiers *.jar* se trouve dans les dossiers *target* de chacun).
+En plus des 5 services correspondant aux 5 microservices, le `docker-compose.yml` construit un service mysql `db_sql` reposant sur un volume externe `patients_db` et un service mongoDB `db_mongo` reposant sur un volume externe `notes_db` afin de faire persister les données.
+
+Ces 2 volumes externes doivent être initialisés avant le pouvoir lancer le `docker-compose.yml`. 
+On peut les créer en utilisant les commande de docker, mais il faut encore initialiser les base de données.  
+Dans le projet `api-patients`, sous le dossier *src/main/ressources*, se trouve un dossier *init-db-mysql* contenant des scripts sql ainsi qu'un `Dockerfile` et un `docker-compose.yml`.
+En lançant ce fichier `docker-compose.yml`, on va créer la base de données et la remplir avec les données de tests.  
+De même, dans le projet `api-notes`, sous le dossier *src/main/ressources*, se trouve un dossier *init-db-mongo* contenant un script javascript ainsi qu'un `Dockerfile` et un `docker-compose.yml`.
+En lançant ce fichier `docker-compose.yml`, on va créer la base de données et la remplir avec les données de tests.  
+
+## Installation et lancement de l'application
+
+#### Prérequis
+Doivent être installés en local :
+- Java
+- Maven
+- Docker
+- Git
+
+#### Installation
+1) copier les sources
+```bash
+$ git clone https://github.com/GarlandNic/MediLaboSolution.git
+$ cd MediLabSolution
+```
+2) compiler les *jar*
+```bash
+$ cd api-patients
+$ mvn clean package
+$ cd ..
+
+$ cd api-notes
+$ mvn clean package
+$ cd ..
+
+$ cd api-diabete
+$ mvn clean package
+$ cd ..
+
+$cd medilab-gateway
+$ mvn clean package
+$ cd ..
+
+$ cd medilab-front
+$ mvn clean package
+$cd ..
+```
+3) créer les volumes
+```bash
+$ docker volume create patients_db
+$ docker volume create notes_db
+```
+4) initialiser les bases de données
+```bash
+$ cd api-patients/src/main/resources/init-db-mysql
+$ docker-compose up --build
+$ cd ../../../../..
+
+$ cd api-notes/src/main/resources/init-db-mysql
+$ docker-compose up --build
+$ cd ../../../../..
+```
+ 
+#### Lancement 
+Exécuter la commande
+```bash
+$ docker-compose up --build
+```
+
+L'application est alors accessible depuis http://localhost:8080/.
 
 
 ## Structure du code
@@ -112,21 +189,6 @@ Le microservice `api-diabete` écoute sur le port 8093.
 Il a pour mission de calculer le niveau de risque d'un patient donné.
 Pour ce faire, il accède aux `api-patients` et `api-notes` via `medilab-gateway` afin d'obtenir les informations pertinentes.
 La sécurité est assurée par une authentification Basic *Stateless* dont l'identifiant et le mot de passe sont connus de `medilab-gateway`.
-
-
-## Docker
-
-L'application a été dockerisée.
-Pour ce faire, il y a un `Dockerfile` dans chacun des microservices, ainsi qu'un `docker-compose.yml` à la racine du projet.
-Chaque microservice a été compilé indépendamment (les fichiers *.jar* se trouve dans les dossiers *target* de chacun).
-En plus des 5 services correspondant aux 5 microservices, le `docker-compose.yml` construit un service mysql `db_sql` reposant sur un volume externe `patients_db` et un service mongoDB `db_mongo` reposant sur un volume externe `notes_db` afin de faire persister les données.
-
-Ces 2 volumes externes doivent être initialisés avant le pouvoir lancer le `docker-compose.yml`. 
-On peut les créer en utilisant les commande de docker, mais il faut encore initialiser les base de données.  
-Dans le projet `api-patients`, sous le dossier *src/main/ressources*, se trouve un dossier *init-db-mysql* contenant des scripts sql ainsi qu'un `Dockerfile` et un `docker-compose.yml`.
-En lançant ce fichier `docker-compose.yml`, on va créer la base de données et la remplir avec les données de tests.  
-De même, dans le projet `api-notes`, sous le dossier *src/main/ressources*, se trouve un dossier *init-db-mongo* contenant un script javascript ainsi qu'un `Dockerfile` et un `docker-compose.yml`.
-En lançant ce fichier `docker-compose.yml`, on va créer la base de données et la remplir avec les données de tests.  
 
 
 ## Perspectives d'évolution
