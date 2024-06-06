@@ -198,6 +198,7 @@ La sécurité est assurée par une authentification Basic *Stateless* dont l'ide
 Le design actuel des pages html est extrêmement sobre.
 La présentation pourra être repensé, avec par exemple, la présence du logo de l'application en haut de page, et des mentions légales en bas de page.  
 La page de connexion est actuellement la page par défaut de Spring Boot Security, mais il peut être envisagé de la remplacer par une page customisée.
+La liste des patients pourra également être amélioré avec la possibilité de trier les patients par nom ou prénom ou un système de recherche.
 
 
 ### Sécurisation de l'accès
